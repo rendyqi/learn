@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{%import '_macros.html' as macros%}
+
+{% block selfcss %}
+.span_herb{
+  margin-top:5px;
+  margin-bottom:5px;
+  padding-top:4px;
+  padding-bottom:4px;
+  font-size:16px;
+  border: 1px dashed #999;
+  border-radius: 5px;
+  color:#000;
+  background-color: #9AFF9A;
+  cursor: pointer;
+}
+.span_herb_select{
+  -webkit-box-shadow: 3px 3px 3px;  
+  -moz-box-shadow: 3px 3px 3px;  
+  box-shadow: 3px 3px 3px;
+  border:1px solid #999;
+  color: #000;
+  background-color: #ffaaaa;
+}
+#fang_name{
+  color:black;
+}
+
+{% endblock %}
+
+{% block selfjs %}
+$(function(){
+  $('.span_herb').click(function() {
+    
+    if($(this).hasClass('span_herb_select')) {
+      //alert(223);
+      $(this).removeClass('span_herb_select'); 
+    } else {
+      //alert(111);
+      $(this).addClass('span_herb_select'); 
+    }
+  });
+});
+{% endblock %}
+
+{% block content %}
+
+  <div class="col-xs-12 col-md-8">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <strong>药方名称</strong>&nbsp;
+        <input type="text" placeholder="请输入药方名称" id="fang_name" name="fang_name">
+      </div>
+      <div class="panel-body" id="fang_content">
+          还没有添加药品
+      </div>
+      <div class="panel-footer text-left">
+          <button type="button" class="btn btn-primary" 
+            onclick="window.location.href='/index?m=fang&a=save';">保存</button>
+          <button type="button" class="btn btn-primary" 
+            onclick="window.location.href='/index?m=fang';">放弃</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="clearfix"></div>
+
+  <div class="col-xs-12 col-md-8">
+    {% for herbs in data %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-xs-10 col-md-10">
+              <a data-toggle="collapse" data-parent="#accordion" 
+                href="#collapse{{herbs[0]}}">
+                <span class="glyphicon glyphicon-list-alt"></span> 
+                {{herbtype[herbs[0]]}}
+              </a>
+            </div>
+            <div class="text-right col-xs-2 col-md-2">
+              <a href="javascript:scroll(0,0)">
+                <span class="glyphicon glyphicon-upload"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div id="collapse{{herbs[0]}}" class="panel-collapse collapse">
+          <div class="panel-body">
+            {% for herb in herbs %}
+            {% if loop.index is not equalto(1) %}
+            <div class="col-xs-6 col-md-2">
+              <span class="span_herb col-xs-12 col-md-12">{{herb.c_name}}</span>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

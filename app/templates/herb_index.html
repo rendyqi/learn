@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{%import '_macros.html' as macros%}
+
+{% block selfjs %}
+$(function(){
+  $('#search_all').click(function() {
+    $('input[name=search]').val('');
+    $('#search_form').submit();
+  });
+
+	$('.del_herb').click(function() {
+    if(confirm("真的要删除吗？"))
+      return true;
+    return false;
+  });
+
+});
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="col-xs-2 col-md-1">
+    <button class="btn btn-primary" 
+      onclick="window.location.href='/index?m=herb&a=form&search={{search}}';">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+  <div class="col-xs-10 col-md-3 " style="margin-bottom:20px">
+    <form id="search_form" action="/index?m=herb" method="post">
+      <div class="input-group">
+          <span class="input-group-btn">
+              <button id="search_all" class="btn btn-primary" type="button">
+                <span class="glyphicon glyphicon-home"></span></button>
+          </span>
+          <input type="text" class="form-control" id="herb_find" name="search" value="{{search}}">
+          <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <span class="glyphicon glyphicon-search"></span> 查找</button>
+          </span>
+      </div>
+    </form>
+  </div>
+  
+  <div class="clearfix col-xs-12 col-md-12"></div>
+  
+  {% for row in data %}
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading"><strong>{{row.c_name}}</strong></div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-3 col-md-3">价格</div>
+          <div class="text-left col-xs-9 col-md-9">{{row.c_price}}</div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3 col-md-3">利润</div>
+          <div class="text-left col-xs-9 col-md-9">{{row.c_gain}}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-md-3">类型</div>
+            <div class="text-left col-xs-9 col-md-9">{{herbtype[row.c_type]}}</div>
+        </div>
+      </div>
+      <div class="panel-footer text-left">
+        <a href="/index?m=herb&a=form&id={{row.c_id}}&search={{search}}">
+          <span class="glyphicon glyphicon-edit"></span> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="del_herb" href="/index?m=herb&a=delete&id={{row.c_id}}">
+          <span class="glyphicon glyphicon-trash"></span> 删除</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="clearfix col-xs-12 col-md-12">
+  {% if pagination %}
+  {{ macros.pagination_widget(pagination, 'index', '&m=herb&search='+search) }}
+  {% endif %}
+  </div>
+
+</div>
+{% endblock %}

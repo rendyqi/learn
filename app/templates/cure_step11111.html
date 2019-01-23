@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{%import '_macros.html' as macros%}
+
+{% block selfcss %}
+.span_herb{
+  margin-top:5px;
+  margin-bottom:5px;
+  padding-top:4px;
+  padding-bottom:4px;
+  font-size:16px;
+  border: 1px dashed #999;
+  border-radius: 5px;
+  color:#000;
+  background-color: #9AFF9A;
+  cursor: pointer;
+}
+.span_herb_select{
+  -webkit-box-shadow: 3px 3px 3px;  
+  -moz-box-shadow: 3px 3px 3px;  
+  box-shadow: 3px 3px 3px;
+  border:1px solid #999;
+  color: #000;
+  background-color: #ffaaaa;
+}
+#fang_name{
+  color:black;
+}
+
+{% endblock %}
+
+{% block selfjs %}
+$(function(){
+  $('.span_herb').click(function() {
+    
+    if($(this).hasClass('span_herb_select')) {
+      //alert(223);
+      $(this).removeClass('span_herb_select'); 
+    } else {
+      //alert(111);
+      $(this).addClass('span_herb_select'); 
+    }
+  });
+});
+{% endblock %}
+
+{% block content %}
+  
+  <div class="clearfix"></div>
+
+  <div class="col-xs-6 col-sm-6 col-md-6" style="margin-bottom:10px">
+    <h2><span class="label label-info">
+        {{patient.c_name}}&nbsp;
+        {{patient.c_age}}&nbsp;
+        {{patient.c_sex}}&nbsp;
+    </span></h2>
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row" data-spy="scroll" data-target="#myScrollspy">
+    <div class="col-xs-3" id="myScrollspy">
+        <ul class="nav nav-tabs nav-stacked" data-spy="affix">
+            {% for herbs in data %}
+            <li><a href="#section{{herbs[0]}}">{{herbtype[herbs[0]]}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-xs-9">
+        {% for herbs in data %}
+        <h2 id="section{{herbs[0]}}">{{herbtype[herbs[0]]}}</h2>
+          <div>
+            {% for herb in herbs %}
+            {% if loop.index is not equalto(1) %}
+            <div class="col-xs-6 col-md-3">
+              <span class="span_herb col-xs-12 col-md-12">{{herb.c_name}}</span>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+          <div class="clearfix"></div>
+        {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

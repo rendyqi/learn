@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{%import '_macros.html' as macros%}
+
+{% block selfcss %}
+.span_herb{
+  margin-top:5px;
+  margin-bottom:5px;
+  font-size:16px;
+}
+{% endblock %}
+
+{% block selfjs %}
+$(function(){
+  $('#search_all').click(function() {
+    $('input[name=search]').val('');
+    $('#search_form').submit();
+  });
+
+  $('.del_fang').click(function() {
+    if(confirm("真的要删除吗？"))
+      return true;
+    return false;
+  });
+});
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="col-xs-2 col-md-1">
+    <button class="btn btn-primary" onclick="window.location.href='/index?m=fang&a=new';">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+  <div class="col-xs-10 col-md-3" style="margin-bottom:20px">
+    <form id="search_form" action="/index?m=fang" method="post">
+      <div class="input-group">
+        <span class="input-group-btn">
+            <button id="search_all" class="btn btn-primary" type="button">
+              <span class="glyphicon glyphicon-home"></span></button>
+        </span>
+        <input type="text" class="form-control" id="fang_find" name="search" value="{{search}}">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-search"></span> 查找</button>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <div class="clearfix col-xs-12 col-md-12"></div>
+  
+  {% for row in data %}
+  <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="panel panel-primary">
+      <div class="panel-heading"><strong>{{row.c_name}}</strong></div>
+      <div class="panel-body">
+        {{ macros.format_herbs(row.c_content) }}
+      </div>
+      <div class="panel-footer text-left">
+        <a href="/index?m=fang&a=edit&id={{row.c_id}}&search={{search}}">
+          <span class="glyphicon glyphicon-edit"></span> 编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="del_fang" href="/index?m=fang&a=delete&id={{row.c_id}}">
+          <span class="glyphicon glyphicon-trash"></span> 删除</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="clearfix col-xs-12 col-md-12">
+    {% if pagination %}
+    {{ macros.pagination_widget(pagination, 'index', '&m=fang&search='+search) }}
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

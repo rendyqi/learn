@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    <h3><a href="/index?m=herb&search={{search}}">
+      <span class="glyphicon glyphicon-arrow-left"></span> 返回药品列表
+    </a></h3>
+  </div>
+
+  <div class="clearfix"></div>
+ 
+  <div class="col-xs-12 col-sm-6 col-md-3">
+    {% for msg in get_flashed_messages() %}
+    <div class="alert alert-info alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert"
+          aria-hidden="true">
+        &times;
+      </button>
+      {{msg}}
+    </div>
+    {% endfor %}
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+      药品修改
+      </div>
+      <div class="panel-body">
+        <form role="form" action="/index?m=herb&a=save&id={{data.c_id}}" method="post">
+          <div class="form-group">
+            <label for="herb_name">名称</label>
+            <input type="text" class="form-control" id="herb_name" name="herb_name" value="{{data.c_name}}">
+          </div>
+          <div class="form-group">
+            <label for="herb_type">类型</label>
+            <select class="form-control" name="herb_type">
+              {% for i in herbtype %}
+                <option value='{{i}}'
+                  {% if i is equalto(data.c_type) %} selected='selected' {% endif %}>
+                  {{herbtype[i]}}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="herb_price">价格</label>
+            <input type="text" class="form-control" id="herb_price" name="herb_price" value="{{data.c_price}}">
+          </div>
+          <div class="form-group">  
+            <label for="herb_gain">利润</label>
+            <input type="text" class="form-control" id="herb_gain" name="herb_gain" value="{{data.c_gain}}">
+          </div>
+          <button type="submit" class="btn btn-primary">保存</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

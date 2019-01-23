@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block selfjs %}
+
+$(function () {  
+  $('#dt_picker1').datetimepicker({
+    language: 'zh-CN',//显示中文
+    format: 'yyyy-mm-dd',//显示格式
+    minView: "month",//设置只显示到月份
+    initialDate: new Date(),//初始化当前日期
+    autoclose: true,//选中自动关闭
+    todayBtn: true//显示今日按钮
+  });
+  $('#dt_picker2').datetimepicker({
+    language: 'zh-CN',//显示中文
+    format: 'yyyy-mm-dd',//显示格式
+    minView: "month",//设置只显示到月份
+    initialDate: new Date(),//初始化当前日期
+    autoclose: true,//选中自动关闭
+    todayBtn: true//显示今日按钮
+  });   
+}); 
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">  
+    <div class='col-xs-12 col-sm-2'>  
+      <div class="form-group">  
+        <label>选择日期：</label>
+        <div class='input-group date' id='dt_picker1'>  
+          <input type='text' class="form-control" value="{{data}}" />  
+          <span class="input-group-addon">  
+            <span class="glyphicon glyphicon-calendar"></span>  
+          </span>  
+        </div>  
+      </div>
+      <div class="form-group">  
+        <label>选择日期：</label>
+        <div class='input-group date' id='dt_picker2'>  
+          <input type='text' class="form-control" value="{{data}}" />  
+          <span class="input-group-addon">  
+            <span class="glyphicon glyphicon-calendar"></span>  
+          </span>  
+        </div>  
+      </div>  
+    </div> 
+  </div>
+</div>
+{% endblock %}

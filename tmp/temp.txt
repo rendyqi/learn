@@ -1,0 +1,27 @@
+<div class="col-xs-3 col-md-1"><button class="btn btn-primary">添加</button></div>
+  <div class="col-xs-9 col-md-3" style="margin-bottom:20px">
+    <form class="form-inline" action="/index?m=fang" method="post">
+      <div class="input-group">
+        <input type="text" class="form-control" id="fang_find" name="search" value="{{search}}">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-search"></span> 查找</button>
+        </span>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="col-xs-3 col-md-1"><button class="btn btn-primary">添加</button></div>
+  <div class="col-xs-9 col-md-3 " style="margin-bottom:20px">
+    <form action="/index?m=herb" method="post">
+      <div class="input-group">
+          <input type="text" class="form-control" id="herb_find" name="search" value="{{search}}">
+          <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                <span class="glyphicon glyphicon-search"></span> 查找</button>
+          </span>
+      </div>
+    </form>
+  </div>
+

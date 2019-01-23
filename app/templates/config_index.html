@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container-fluid">
+<div class="col-xs-12 col-md-3">
+    {% for msg in get_flashed_messages() %}
+    <div class="alert alert-info alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert"
+          aria-hidden="true">
+        &times;
+      </button>
+      {{msg}}
+    </div>
+    {% endfor %}
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+        默认设置
+        </div>
+        <div class="panel-body">
+        <form role="form" action="/index?m=config&a=update" method="post">
+            {% for row in data %}
+            <div class="form-group">
+                {% if row.c_name is equalto('default_weight') %}
+                    <label for="default_weight">每味药默认使用的量，单位为克</label>
+                    <input type="text" class="form-control" id="default_weight" name="default_weight" 
+                        placeholder="请输入数字" value="{{row.c_value}}" onkeyup="value=value.replace(/[^\d]/g,'')">
+                {% elif row.c_name is equalto('default_count') %}
+                    <label for="default_count">默认显示的剂量（开几付药）</label>
+                    <input type="text" class="form-control" id="default_count" name="default_count" 
+                        placeholder="请输入数字" value="{{row.c_value}}" onkeyup="value=value.replace(/[^\d]/g,'')">
+                {% elif row.c_name is equalto('default_gain') %}
+                    <label for="default_gain">所有药品的默认利润，设置为成本的几倍</label>
+                    <input type="text" class="form-control" id="default_gain" name="default_gain" 
+                        placeholder="请输入数字" value="{{row.c_value}}" onkeyup="value=value.replace(/[^\d]/g,'')">
+                {% else %}
+                    <label for="name">药品价格的重量单位</label>
+                    <select class="form-control" name="price_unit">
+                        <option value='kg' {% if row.c_value is equalto('kg') %}
+                            selected='selected'{% endif %}>公斤</option>
+                        <option value='jin' {% if row.c_value is equalto('jin') %}
+                            selected='selected'{% endif %}>斤</option>
+                        <option value='liang' {% if row.c_value is equalto('liang') %}
+                            selected='selected'{% endif %}>两</option>
+                        <option value='g' {% if row.c_value is equalto('g') %}
+                            selected='selected'{% endif %}>克</option>
+                    </select>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">保存</button>
+        </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+        数据库优化
+        </div>
+        <div class="panel-body">
+        <button type="button" class="btn btn-primary" 
+            onclick="window.location.href='/index?m=config&a=optimize';">优化</button>
+            &nbsp;&nbsp;注意：此操作需要一些时间
+        </div>
+    </div>
+
+    <br><br>
+
+</div>
+</div>
+
+{% endblock %}
