@@ -5,6 +5,8 @@ from app import gdb, g_herb_type, models
 import app.utils as utils
 import datetime
 
+#all view
+
 def index():
     res = request.args
     module = res.get('m', 'index').lower()
@@ -234,7 +236,7 @@ class Vfang(object):
     def index(self, module, action):
         page = request.args.get('page', 1, type=int)
         search = request.values.get('search', '')
-        ##test git
+        
         if search.encode('utf-8').isalpha():
             query = models.MFang.query.filter(models.MFang.c_py.like("%$"+search+"%"))
         else:
